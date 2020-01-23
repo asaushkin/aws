@@ -5,12 +5,12 @@
     <parent>
         <artifactId>aws</artifactId>
         <groupId>me.asaushkin</groupId>
-        <version>1.0.1</version>
+        <version>1.1-SNAPSHOT</version>
     </parent>
 
     <groupId>me.asaushkin</groupId>
     <artifactId>todo-lambda</artifactId>
-    <version>1.0.1</version>
+    <version>1.1-SNAPSHOT</version>
 
     <name>todo-lambda</name>
 
