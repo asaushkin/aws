@@ -1,4 +1,4 @@
-target
 *.iml
 .idea
-*.*Backup
+.envrc
+.python-version
