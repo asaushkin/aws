@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Generic launch template
+
+Resources:
+
+  ECGenericRoleStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: '../ec2-generic-role/ec2-generic-role.yaml'
+
+  EC2InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: "/"
+      Roles:
+        - !GetAtt ECGenericRoleStack.Outputs.EC2GenericRole
+
+#  MyLaunchTemplate:
+#    Type: AWS::EC2::LaunchTemplate
+#    Properties:
+#      LaunchTemplateData:
+#        InstanceType: c4.large
+#        DisableApiTermination: 'true'
+#        KeyName: MyKeyPair
+#        ImageId: ami-04d5cc9b88example
+#        IamInstanceProfile:
+#          Arn:
+#            Fn::GetAtt:
+#              - MyIamInstanceProfile
+#              - Arn
+#        SecurityGroupIds:
+#          - sg-083cd3bfb8example
+#      LaunchTemplateName: MyLaunchTemplate
