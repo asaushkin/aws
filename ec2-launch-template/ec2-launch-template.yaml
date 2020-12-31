@@ -6,7 +6,7 @@ Resources:
   ECGenericRoleStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: '../ec2-generic-role/ec2-generic-role.yaml'
+      TemplateURL: './ec2-generic-role/ec2-generic-role.yaml'
 
   EC2InstanceProfile:
     Type: AWS::IAM::InstanceProfile

@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Generic EC2 role with allowed ssm, codedeploy, cloudwatch agents
+
+Resources:
+
+  EC2InstanceRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          -
+            Action: "sts:AssumeRole"
+            Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+        Version: "2012-10-17"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+        - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
+        - arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole
+      Policies:
+        - PolicyName: TagVolumes
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "ec2:DescribeInstances"
+                  - "ec2:CreateTags"
+                Resource: '*'
+      Path: /
+
+Outputs:
+
+  EC2GenericRole:
+    Description: Generic EC2 role with allowed ssm, codedeploy, cloudwatch agents
+    Value: !GetAtt EC2InstanceRole.Arn
+
+  EC2GenericRoleArn:
+    Description: Generic EC2 role ARN with allowed ssm, codedeploy, cloudwatch agents
+    Value: !Ref EC2InstanceRole
+
