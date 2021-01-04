@@ -18,8 +18,41 @@ Resources:
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
         - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
-        - arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole
       Policies:
+        - PolicyName: S3ListAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:ListBucket
+                  - s3:ListAllMyBuckets
+                  - s3:ListBucketMultipartUploads
+                  - s3:ListBucketVersions
+                  - s3:ListJobs
+                Resource:
+                  - "arn:aws:s3:::aws4you-artifacts"
+        - PolicyName: S3GetObjectsAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:GetObjectVersion
+                  - s3:ListMultipartUploadParts
+                Resource:
+                  - "arn:aws:s3:::aws4you-artifacts/web-backend-pipeline/*"
+                  - "arn:aws:s3:::aws4you-artifacts/web-backend-prod/*"
+        - PolicyName: S3WriteObjectsAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:PutObject
+                Resource:
+                  - "arn:aws:s3:::aws4you-artifacts/dbbackup/*"
         - PolicyName: TagVolumes
           PolicyDocument:
             Version: "2012-10-17"
@@ -29,6 +62,19 @@ Resources:
                   - "ec2:DescribeInstances"
                   - "ec2:CreateTags"
                 Resource: '*'
+        - PolicyName: Certbot
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "route53:ListHostedZones"
+                  - "route53:GetChange"
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - "route53:ChangeResourceRecordSets"
+                Resource: 'arn:aws:route53:::hostedzone/Z100449812MXZTBZTVSUT'
       Path: /
 
 Outputs:
